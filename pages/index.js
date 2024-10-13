@@ -27,18 +27,14 @@ export default function Home() {
       console.log('Response text:', text);
 
       if (!response.ok) {
-        throw new Error(text || 'An error occurred while fetching the transcript')
+        const errorData = JSON.parse(text);
+        throw new Error(errorData.error + (errorData.details ? ` - ${errorData.details}` : ''));
       }
 
       setTranscript(text)
     } catch (error) {
-      setLoading(false);
-      if (error.response) {
-        const errorData = error.response.data;
-        setError(`Error: ${errorData.error}${errorData.details ? ` - ${errorData.details}` : ''}`);
-      } else {
-        setError('An unexpected error occurred. Please try again.');
-      }
+      setIsLoading(false);
+      setError(error.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false)
     }
