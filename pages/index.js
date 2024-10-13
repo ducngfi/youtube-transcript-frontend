@@ -32,8 +32,13 @@ export default function Home() {
 
       setTranscript(text)
     } catch (error) {
-      console.error('Error fetching transcript:', error)
-      setError(`Error: ${error.message}`)
+      setLoading(false);
+      if (error.response) {
+        const errorData = error.response.data;
+        setError(`Error: ${errorData.error}${errorData.details ? ` - ${errorData.details}` : ''}`);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     } finally {
       setIsLoading(false)
     }
