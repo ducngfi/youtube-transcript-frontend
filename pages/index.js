@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Head from 'next/head'
+import getConfig from 'next/config'
 
 export default function Home() {
   const [videoUrl, setVideoUrl] = useState('')
@@ -8,12 +9,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [format, setFormat] = useState('json')
 
+  const { publicRuntimeConfig } = getConfig()
+
   const fetchTranscript = async () => {
     setError('')
     setTranscript('')
     setIsLoading(true)
     try {
-      const apiUrl = `/api/transcript?video_url=${encodeURIComponent(videoUrl)}&format=${format}`;
+      const apiUrl = `${publicRuntimeConfig.backendUrl}/api/transcript?video_url=${encodeURIComponent(videoUrl)}&format=${format}`;
       const response = await fetch(apiUrl)
       
       if (!response.ok) {

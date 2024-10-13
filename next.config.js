@@ -1,9 +1,13 @@
 module.exports = {
+  trailingSlash: true,
+  publicRuntimeConfig: {
+    backendUrl: 'https://youtube-transcript-frontend.onrender.com',
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5001/api/:path*', 
+        destination: 'https://youtube-transcript-frontend.onrender.com/api/:path*', 
       },
     ]
   },
