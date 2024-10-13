@@ -1,13 +1,14 @@
 module.exports = {
   trailingSlash: true,
+  output: 'export',
   publicRuntimeConfig: {
-    backendUrl: 'https://youtube-transcript-frontend.onrender.com',
+    backendUrl: process.env.BACKEND_URL || 'https://youtube-transcript-backend-t9pw.onrender.com',
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://youtube-transcript-frontend.onrender.com/api/:path*', 
+        destination: 'https://youtube-transcript-backend-t9pw.onrender.com/api/:path*', 
       },
     ]
   },
