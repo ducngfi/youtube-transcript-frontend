@@ -4,18 +4,10 @@ module.exports = {
   publicRuntimeConfig: {
     backendUrl: process.env.BACKEND_URL || 'https://youtube-transcript-backend-t9pw.onrender.com',
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://youtube-transcript-backend-t9pw.onrender.com/api/:path*', 
-      },
-    ]
-  },
   async headers() {
     return [
       {
-        source: '/api/:path*',
+        source: '/:path*',
         headers: [
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT' },
