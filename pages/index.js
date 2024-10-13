@@ -17,18 +17,23 @@ export default function Home() {
     setIsLoading(true)
     try {
       const apiUrl = `${publicRuntimeConfig.backendUrl}/api/transcript?video_url=${encodeURIComponent(videoUrl)}&format=${format}`;
+      console.log('Fetching from URL:', apiUrl);
       const response = await fetch(apiUrl)
       
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
+      const text = await response.text();
+      console.log('Response text:', text);
+
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'An error occurred while fetching the transcript')
+        throw new Error(text || 'An error occurred while fetching the transcript')
       }
 
-      const data = await response.text()
-      setTranscript(data)
+      setTranscript(text)
     } catch (error) {
       console.error('Error fetching transcript:', error)
-      setError(error.message)
+      setError(`Error: ${error.message}`)
     } finally {
       setIsLoading(false)
     }
